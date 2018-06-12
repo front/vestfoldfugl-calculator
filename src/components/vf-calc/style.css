@@ -17,10 +17,10 @@ a.plus, a.minus {
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 2px solid darkblue;
+  border: 2px solid #5a9f66;
   border-radius: 50%;
   text-decoration: none;
-  color: darkblue;
+  color: #5a9f66;
   margin: 0 20px;
 }
 a.plus:before {
@@ -32,7 +32,7 @@ a.minus:before {
 
 h2 {
   margin: 20px 0;
-  color: darkblue;
+  color: #5a9f66;
 }
 
 p {
@@ -44,5 +44,5 @@ table {
   margin-bottom: 20px;
 }
 td:first-child {
-  min-width: 40px;
+  min-width: 60px;
 }

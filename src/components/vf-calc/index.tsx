@@ -1,6 +1,32 @@
 
 import { Component, Prop, State } from '@stencil/core';
 
+interface Ingredient {
+  unit?: string,
+  quantity?: number,
+  name: string,
+}
+
+function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) : string {
+  let { quantity, unit } = item;
+  if(!quantity) {
+    return '';
+  }
+
+  const qty = quantity * numPersons / (defaultNum || 1);
+  let value = qty.toString();
+
+  if(unit === 'g' || unit === 'ml') {
+    value = Math.round(qty).toString();
+  }
+  else if(qty % 1) {
+    value = qty.toFixed(1);
+  }
+
+  return `${value} ${unit || ''}`;
+}
+
+
 @Component({
   tag: 'vf-calc',
   styleUrl: 'style.css',
@@ -11,7 +37,7 @@ export class VestfoldFuglCalc {
 
   @State() numPersons: number = 1;
   @State() defaultNum: number = 1;
-  @State() ingredients: any[] = [];
+  @State() ingredients: Ingredient[] = [];
 
   componentDidLoad () {
     console.log('Loading recipe', this.recipeId);
@@ -26,9 +52,14 @@ export class VestfoldFuglCalc {
         quantity: 50,
         name: 'grønne erter',
       }, {
+        quantity: 1,
+        name: 'nevne pinjekjerner',
+      }, {
         unit: 'dl',
         quantity: 2,
         name: 'olivenolje',
+      }, {
+        name: 'Basilikum',
       });
     },
     250);
@@ -62,7 +93,7 @@ export class VestfoldFuglCalc {
         <table>
           { ingredients.map(item => (
             <tr>
-              <td>{ Math.round(item.quantity * numPersons / defaultNum) } { item.unit }</td>
+              <td>· { getQuantity(item, defaultNum, numPersons) }</td>
               <td>{ item.name }</td>
             </tr>
           )) }
