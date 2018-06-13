@@ -5,8 +5,8 @@
   font-family: Arial, Helvetica, sans-serif;
 
   padding: 1.25rem .625rem .625rem;
-  background-color: #ebf4ed;
-  border: .0625rem solid #5a9f66;
+  background-color: $color-background;
+  border: .0625rem solid $color-green;
 }
 
 header {
@@ -17,10 +17,10 @@ a.plus, a.minus {
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 2px solid #5a9f66;
+  border: 2px solid $color-green;
   border-radius: 50%;
   text-decoration: none;
-  color: #5a9f66;
+  color: $color-green;
   margin: 0 20px;
 }
 a.plus:before {
@@ -31,8 +31,8 @@ a.minus:before {
 }
 
 h2 {
-  margin: 20px 0;
-  color: #5a9f66;
+  margin: 10px 0 25px;
+  color: $color-green;
 }
 
 p {

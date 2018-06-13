@@ -22,14 +22,13 @@ function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) 
   else if(qty % 1) {
     value = qty.toFixed(1);
   }
-
   return `${value} ${unit || ''}`;
 }
 
 
 @Component({
   tag: 'vf-calc',
-  styleUrl: 'style.css',
+  styleUrl: 'style.scss',
   shadow: true
 })
 export class VestfoldFuglCalc {

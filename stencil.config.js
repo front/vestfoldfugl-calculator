@@ -1,3 +1,6 @@
+
+const sass = require('@stencil/sass');
+
 exports.config = {
   namespace: 'vf-calc',
   outputTargets:[
@@ -8,6 +11,13 @@ exports.config = {
       type: 'www',
       serviceWorker: false
     }
+  ],
+  plugins: [
+    sass({
+      injectGlobalPaths: [
+        'src/globals/variables.scss',
+      ]
+    })
   ]
 };
 
