@@ -27,17 +27,10 @@
     "jest": "^21.2.1"
   },
   "author": "Frontkom",
-  "jest": {
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ]
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/front/vestfoldfugl-calculator.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/front/vestfoldfugl-calculator"
 }
