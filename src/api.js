@@ -1,5 +1,5 @@
 
-let endpoint = '/wp-json/api/v1/recipe';
+let endpoint = '/wp-json/api/v1';
 const host = window.location.host;
 
 if(host.includes('localhost')) {
@@ -8,7 +8,19 @@ if(host.includes('localhost')) {
 
 export async function getRecipe (id) {
   try {
-    const res = await fetch(`${endpoint}/${id}`);
+    const res = await fetch(`${endpoint}/recipe/${id}`);
+    const data = await res.json();
+    return data;
+  }
+  catch(err) {
+    console.log(err);
+    return null;
+  }
+}
+
+export async function getProduct (id) {
+  try {
+    const res = await fetch(`${endpoint}/product/${id}`);
     const data = await res.json();
     return data;
   }

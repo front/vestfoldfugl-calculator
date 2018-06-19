@@ -1,14 +1,8 @@
 
 import { Component, Prop, State } from '@stencil/core';
+import { Ingredient } from './types';
 import { getRecipe } from '../../api';
 
-
-interface Ingredient {
-  name?: string,
-  product_id?: number,
-  unit?: string,
-  value?: number,
-}
 
 function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) : string {
   let { value, unit } = item;
@@ -44,15 +38,18 @@ export class VestfoldFuglCalc {
 
   async componentDidLoad () {
     const recipe = await getRecipe(this.recipeId);
-    console.log('Recipe', this.recipeId, recipe);
+    if(!recipe) {
+      return;
+    }
 
-    // Load setting
+    // Load and set number of persons
     const saved = localStorage.getItem('numPersons');
-    this.numPersons = parseInt(saved) || 4;
+    this.defaultNum = parseInt(recipe.persons) || 4;
+    this.numPersons = parseInt(saved) || this.defaultNum;
 
-    this.defaultNum = recipe.default_persons || 4;
+    // Assign ingredients and title
     this.ingredients = recipe.ingredients;
-    this.title = recipe.ingredients_text;
+    this.title = recipe.ingredients_text || '';
   }
 
   addPerson = ev => {
@@ -87,8 +84,13 @@ export class VestfoldFuglCalc {
           <h4>Ingredienser</h4>
           <ul>
             { ingredients.map(item => (
-              <li class="ingredient-text">
-                { getQuantity(item, defaultNum, numPersons) } { item.name }
+              <li class="ingredient">
+                { item.product ?
+                  <a href={`/produkter/${item.product.name}/`}>
+                    { getQuantity(item, defaultNum, numPersons) } {item.product.title}
+                  </a> :
+                  <span>{ getQuantity(item, defaultNum, numPersons) } {item.name}</span>
+                }
               </li>
             )) }
           </ul>
