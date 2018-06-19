@@ -1,0 +1,39 @@
+{
+  "components": [
+    {
+      "tag": "vf-calc",
+      "dependencies": [],
+      "componentClass": "VestfoldFuglCalc",
+      "componentPath": "components/vf-calc/index.js",
+      "styles": {},
+      "props": [
+        {
+          "name": "recipeId",
+          "type": "Number",
+          "attr": "recipe-id"
+        }
+      ],
+      "states": [
+        {
+          "name": "defaultNum"
+        },
+        {
+          "name": "ingredients"
+        },
+        {
+          "name": "numPersons"
+        },
+        {
+          "name": "title"
+        }
+      ]
+    }
+  ],
+  "collections": [],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.9.1",
+    "typescriptVersion": "2.8.3"
+  },
+  "bundles": []
+}
