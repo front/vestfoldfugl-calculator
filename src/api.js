@@ -2,7 +2,7 @@
 let endpoint = '/wp-json/api/v1';
 const host = window.location.host;
 
-if(host.includes('localhost')) {
+if(host.includes('localhost') || host.includes('127.0.0.1')) {
   endpoint = `https://vestfoldfugl.devz.no${endpoint}`;
 }
 
