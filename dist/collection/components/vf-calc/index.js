@@ -46,13 +46,16 @@ export class VestfoldFuglCalc {
     componentDidLoad() {
         return __awaiter(this, void 0, void 0, function* () {
             const recipe = yield getRecipe(this.recipeId);
-            console.log('Recipe', this.recipeId, recipe);
-            // Load setting
+            if (!recipe) {
+                return;
+            }
+            // Load and set number of persons
             const saved = localStorage.getItem('numPersons');
-            this.numPersons = parseInt(saved) || 4;
-            this.defaultNum = recipe.default_persons || 4;
+            this.defaultNum = parseInt(recipe.persons) || 4;
+            this.numPersons = parseInt(saved) || this.defaultNum;
+            // Assign ingredients and title
             this.ingredients = recipe.ingredients;
-            this.title = recipe.ingredients_text;
+            this.title = recipe.ingredients_text || '';
         });
     }
     render() {
@@ -66,10 +69,15 @@ export class VestfoldFuglCalc {
                     h("a", { href: "", class: "plus", onClick: this.addPerson }, "+"))),
             h("div", null,
                 h("h4", null, "Ingredienser"),
-                h("ul", null, ingredients.map(item => (h("li", { class: "ingredient-text" },
-                    getQuantity(item, defaultNum, numPersons),
-                    " ",
-                    item.name)))),
+                h("ul", null, ingredients.map(item => (h("li", { class: "ingredient" }, item.product ?
+                    h("a", { href: `/produkter/${item.product.name}/` },
+                        getQuantity(item, defaultNum, numPersons),
+                        " ",
+                        item.product.title) :
+                    h("span", null,
+                        getQuantity(item, defaultNum, numPersons),
+                        " ",
+                        item.name))))),
                 h("div", { class: "recipe-tree" },
                     h("div", { "data-anim": "blow", "data-blow-dir": "1" }),
                     h("div", { "data-anim": "blow", "data-blow-dir": "1" })))));
