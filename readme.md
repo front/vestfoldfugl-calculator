@@ -20,3 +20,21 @@ Then you can use the element anywhere in your template, JSX, html, etc.
 ```
 <vf-calc recipe-id="261"></vf-calc>
 ```
+
+
+### Example
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vestfold Fugl Calculator</title>
+  <script src="./node_modules/@frontkom/vf-calc/dist/vf-calc.js"></script>
+</head>
+<body>
+  <h1>Vestfold Fugl Recipe Calculator</h1>
+  <vf-calc recipe-id="261"></vf-calc>
+</body>
+</html>
+```
