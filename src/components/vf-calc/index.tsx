@@ -1,28 +1,31 @@
 
 import { Component, Prop, State } from '@stencil/core';
+import { getRecipe } from '../../api';
+
 
 interface Ingredient {
+  name?: string,
+  product_id?: number,
   unit?: string,
-  quantity?: number,
-  name: string,
+  value?: number,
 }
 
 function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) : string {
-  let { quantity, unit } = item;
-  if(!quantity) {
+  let { value, unit } = item;
+  if(!value) {
     return '';
   }
 
-  const qty = quantity * numPersons / (defaultNum || 1);
-  let value = qty.toString();
+  const qty = value * numPersons / (defaultNum || 1);
+  let res = qty.toString();
 
   if(unit === 'g' || unit === 'ml') {
-    value = Math.round(qty).toString();
+    res = Math.round(qty).toString();
   }
   else if(qty % 1) {
-    value = qty.toFixed(1);
+    res = qty.toFixed(1);
   }
-  return `${value} ${unit || ''}`;
+  return `${res} ${unit || ''}`;
 }
 
 
@@ -37,36 +40,26 @@ export class VestfoldFuglCalc {
   @State() numPersons: number = 1;
   @State() defaultNum: number = 1;
   @State() ingredients: Ingredient[] = [];
+  @State() title: string = '';
 
-  componentDidLoad () {
-    console.log('Loading recipe', this.recipeId);
+  async componentDidLoad () {
+    const recipe = await getRecipe(this.recipeId);
+    console.log('Recipe', this.recipeId, recipe);
 
-    setTimeout(() => {
-      console.log('Data loaded');
+    // Load setting
+    const saved = localStorage.getItem('numPersons');
+    this.numPersons = parseInt(saved) || 4;
 
-      this.numPersons = 4;
-      this.defaultNum = 4;
-      this.ingredients.push({
-        unit: 'g',
-        quantity: 50,
-        name: 'grønne erter',
-      }, {
-        quantity: 1,
-        name: 'nevne pinjekjerner',
-      }, {
-        unit: 'dl',
-        quantity: 2,
-        name: 'olivenolje',
-      }, {
-        name: 'Basilikum',
-      });
-    },
-    250);
+    this.defaultNum = recipe.default_persons || 4;
+    this.ingredients = recipe.ingredients;
+    this.title = recipe.ingredients_text;
   }
 
   addPerson = ev => {
     ev.preventDefault();
      this.numPersons++;
+     // Save setting
+     localStorage.setItem('numPersons', this.numPersons.toString());
   };
 
   removePerson = ev => {
@@ -74,6 +67,8 @@ export class VestfoldFuglCalc {
     if(this.numPersons > 1) {
       this.numPersons--;
     }
+    // Save setting
+    localStorage.setItem('numPersons', this.numPersons.toString());
   };
 
   render () {

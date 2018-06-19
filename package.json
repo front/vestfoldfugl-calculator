@@ -1,5 +1,5 @@
 {
-  "name": "vf-calc",
+  "name": "@frontkom/vf-calc",
   "version": "0.0.1",
   "description": "Vestfold Fugl Recipe Calculator",
   "module": "dist/esm/index.js",
