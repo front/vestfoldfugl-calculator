@@ -28,8 +28,8 @@ function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) 
 
 @Component({
   tag: 'vf-calc',
-  styleUrl: 'style.scss',
-  shadow: true
+  // styleUrl: 'style.scss',
+  // shadow: true
 })
 export class VestfoldFuglCalc {
   @Prop() recipeId: number;
