@@ -1,26 +1,8 @@
 
 import { Component, Prop, State } from '@stencil/core';
 import { Ingredient } from './types';
+import { getQuantity } from './helpers';
 import { getRecipe } from '../../api';
-
-
-function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) : string {
-  let { value, unit } = item;
-  if(!value) {
-    return '';
-  }
-
-  const qty = value * numPersons / (defaultNum || 1);
-  let res = qty.toString();
-
-  if(unit === 'g' || unit === 'ml') {
-    res = Math.round(qty).toString();
-  }
-  else if(qty % 1) {
-    res = qty.toFixed(1);
-  }
-  return `${res} ${unit || ''}`;
-}
 
 
 @Component({
@@ -31,6 +13,7 @@ function getQuantity (item: Ingredient, defaultNum: number, numPersons: number) 
 export class VestfoldFuglCalc {
   @Prop() recipeId: number;
 
+  @State() loaded: boolean = false;
   @State() numPersons: number = 1;
   @State() defaultNum: number = 1;
   @State() ingredients: Ingredient[] = [];
@@ -39,7 +22,7 @@ export class VestfoldFuglCalc {
   async componentDidLoad () {
     const recipe = await getRecipe(this.recipeId);
     if(!recipe) {
-      return;
+      return console.error('Failed to load recipe');
     }
 
     // Load and set number of persons
@@ -50,6 +33,8 @@ export class VestfoldFuglCalc {
     // Assign ingredients and title
     this.ingredients = recipe.ingredients;
     this.title = recipe.ingredients_text || '';
+
+    this.loaded = true;
   }
 
   addPerson = ev => {
@@ -69,7 +54,11 @@ export class VestfoldFuglCalc {
   };
 
   render () {
-    const { numPersons, defaultNum, ingredients } = this;
+    const { numPersons, defaultNum, ingredients, loaded } = this;
+    if(!loaded) {
+      return null;
+    }
+
     return (
       <div class="ingridient-wrapper">
         <header>

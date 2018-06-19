@@ -9,8 +9,10 @@ if(host.includes('localhost') || host.includes('127.0.0.1')) {
 export async function getRecipe (id) {
   try {
     const res = await fetch(`${endpoint}/recipe/${id}`);
-    const data = await res.json();
-    return data;
+    if(res.status > 299) {
+      return null;
+    }
+    return await res.json();
   }
   catch(err) {
     console.log(err);
@@ -21,8 +23,10 @@ export async function getRecipe (id) {
 export async function getProduct (id) {
   try {
     const res = await fetch(`${endpoint}/product/${id}`);
-    const data = await res.json();
-    return data;
+    if(res.status > 299) {
+      return null;
+    }
+    return await res.json();
   }
   catch(err) {
     console.log(err);
