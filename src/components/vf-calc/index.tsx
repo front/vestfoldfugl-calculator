@@ -79,24 +79,29 @@ export class VestfoldFuglCalc {
   render () {
     const { numPersons, defaultNum, ingredients } = this;
     return (
-      <div class="container">
+      <div class="ingridient-wrapper">
         <header>
-          <p>Antall Porsjoner</p>
-          <h2>
-            <a href="" class="minus" onClick={ this.removePerson }></a>
-            <span>{ numPersons } personer</span>
-            <a href="" class="plus" onClick={ this.addPerson }></a>
-          </h2>
+          <h3>Antall porsjoner</h3>
+          <div>
+            <a href="" class="minus" onClick={ this.removePerson }>-</a>
+            <span>{ numPersons }</span>
+            <a href="" class="plus" onClick={ this.addPerson }>+</a>
+          </div>
         </header>
-        <p>Ingredienser</p>
-        <table>
-          { ingredients.map(item => (
-            <tr>
-              <td>· { getQuantity(item, defaultNum, numPersons) }</td>
-              <td>{ item.name }</td>
-            </tr>
-          )) }
-        </table>
+        <div>
+          <h4>Ingredienser</h4>
+          <ul>
+            { ingredients.map(item => (
+              <li class="ingredient-text">
+                { getQuantity(item, defaultNum, numPersons) } { item.name }
+              </li>
+            )) }
+          </ul>
+          <div class="recipe-tree">
+            <div data-anim="blow" data-blow-dir="1"></div>
+            <div data-anim="blow" data-blow-dir="1"></div>
+          </div>
+        </div>
       </div>
     );
   }
