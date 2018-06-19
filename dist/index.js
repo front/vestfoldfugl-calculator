@@ -1,1 +1,0 @@
-// VfCalc: CommonJS Main
